@@ -37,7 +37,9 @@ class Game
 			while active_hand?
 
 				@players.each do |player|
-					for(var i=0; i < player.hands.length; i++)
+					i = 0
+					while i < player.hands.length
+						i += 1
 						hand = player.hands[i]
 
 						if(hand.bet > 0 && hand.cards.length == 0)
