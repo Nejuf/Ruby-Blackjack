@@ -6,8 +6,7 @@ class HumanPlayer < Player
 
 	def initialize(taken_names)
 		super()
-		name = prompt("Please enter your name.") do |input|
-			puts "input #{input}"
+		@name = prompt("Please enter your name.") do |input|
 			(input.length > 0 && !taken_names.include?(input.downcase))
 		end
 	end

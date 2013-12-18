@@ -6,6 +6,7 @@ describe Game do
 		before(:all) do
 			@game = Game.new
 			@game.stub(:gets) { '1' } #number of players
+			HumanPlayer.any_instance.stub(:gets){ 'Bob' } unless HumanPlayer.nil?
 			@game.start
 		end
 
