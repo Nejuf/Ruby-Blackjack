@@ -1,3 +1,5 @@
+require('./src/CardCollection')
+
 class Deck
 	include CardCollection
 

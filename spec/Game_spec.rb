@@ -2,7 +2,7 @@ require('./Blackjack.rb')
 
 describe Game do
 
-	context "initializes" do
+	context "initialization" do
 		before(:all) do
 			@game = Game.new
 		end
@@ -13,5 +13,4 @@ describe Game do
 
 	end
 
-	
 end
