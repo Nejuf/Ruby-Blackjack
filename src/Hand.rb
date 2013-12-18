@@ -12,6 +12,7 @@ class Hand
 
 	def add(*args)
 		args.each do |card|
+			card.show if(cards.length > 0)
 			cards << card
 		end
 
@@ -68,5 +69,13 @@ class Hand
 		new_hand.bet = @bet
 		new_hand.add(cards.pop)
 		new_hand
+	end
+
+	def to_s
+		str = ""
+		cards.each do |c|
+			str << " #{c}"
+		end
+		str
 	end
 end

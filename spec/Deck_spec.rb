@@ -16,12 +16,20 @@ describe Deck do
 		end
 	end
 
-	it '#draw removes a card' do
+	it '#draw removes a card and returns it in array' do
 		d = Deck.new
 		len = d.length
 		c = d.draw
-		expect(c).to_not be_nil
+		expect(c.length).to eq(1)
 		expect(len - d.length).to eq(1)
+	end
+
+	it '#draw removes multiple card and returns them in array' do
+		d = Deck.new
+		len = d.length
+		c = d.draw(3)
+		expect(c.length).to eq(3)
+		expect(len - d.length).to eq(3)
 	end
 
 end

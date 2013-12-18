@@ -13,7 +13,7 @@ class HumanPlayer < Player
 
 	def choose_play(hand, dealer_points)
 		if hand.bet == 0
-			bet = prompt("How much will you bet? ($1-$#{@money}) or (\"quit\" to stop playing)", "Invalid bet.") do |input|
+			bet = prompt("#{@name}, How much will you bet? ($1-$#{@money}) or (\"quit\" to stop playing)", "Invalid bet.") do |input|
 				return { :action => :quit } if input.downcase == 'quit'
 				(input.to_i >= 1 && input.to_i <= @money)
 			end
@@ -27,13 +27,14 @@ class HumanPlayer < Player
 			end
 			options << 'quit'
 
-			choice = prompt("What will you do? (#{options.join(', ')})", "Invalid choice.", options)
+			choice = prompt("#{@name}, What will you do? (#{options.join(', ')})", "Invalid choice.", options)
 			choice = choice.sub(' ', '_').downcase
-			return choice.to_sym
+			return {:action => choice.to_sym }
 		end
 	end
 
 	def total_bets
+		total = 0
 		hands.inject(total) do |total, hand|
 			total + hand.bet
 		end

@@ -17,13 +17,13 @@ describe Hand do
 	end
 
 	before(:each) do
-		@c1 = double('Card', :rank => 1, :suit => 'DIAMONDS')
-		@c2 = double('Card', :rank => 3, :suit => 'HEARTS')
-		@c3 = double('Card', :rank => 13, :suit => 'CLUBS')
-		@c4 = double('Card', :rank => 8, :suit => 'SPADES')
-		@c5 = double('Card', :rank => 5, :suit => 'SPADES')
-		@c6 = double('Card', :rank => 5, :suit => 'DIAMONDS')
-		@c7 = double('Card', :rank => 1, :suit => 'CLUBS')
+		@c1 = double('Card', :rank => 1, :suit => 'DIAMONDS', :show => true)
+		@c2 = double('Card', :rank => 3, :suit => 'HEARTS', :show => true)
+		@c3 = double('Card', :rank => 13, :suit => 'CLUBS', :show => true)
+		@c4 = double('Card', :rank => 8, :suit => 'SPADES', :show => true)
+		@c5 = double('Card', :rank => 5, :suit => 'SPADES', :show => true)
+		@c6 = double('Card', :rank => 5, :suit => 'DIAMONDS', :show => true)
+		@c7 = double('Card', :rank => 1, :suit => 'CLUBS', :show => true)
 	end
 
 	context '#add' do

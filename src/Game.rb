@@ -32,6 +32,26 @@ class Game
 
 	def game_loop
 		while active_human_player?
+			#--Set dealer's cards
+			@dealer_hand.add(*@deck.draw(2))
+
+			#-- Get Bets
+			@players.each do |player|
+				action = player.choose_play(player.hands.first, @dealer_hand.points)
+
+				case action[:action]
+				when :bet
+					player.hands.first.bet += action[:amount]
+				when :quit
+					player.hands.each do |h|
+						hand.active = false
+						player.money -= h.bet
+					end
+					player.active = false
+				else
+					raise "Can only bet or quit at this stage.\nUnrecognized player action: #{action}"
+				end
+			end
 
 			#--Player Turns--
 			while active_hand?
@@ -39,32 +59,33 @@ class Game
 				@players.each do |player|
 					i = 0
 					while i < player.hands.length
-						i += 1
 						hand = player.hands[i]
+						i += 1
 
 						if(hand.bet > 0 && hand.cards.length == 0)
-							hand.add(@deck.draw)
+							hand.add(@deck.draw.first)
 						elsif(hand.cards.length == 1)
-							card = @deck.draw
+							card = @deck.draw.first
 							card.show
 							hand.add(card)
 						else
 							hand.active = true
 							while hand.active
+								display_table
 								action = player.choose_play(hand, @dealer_hand.points)
 
 								case action[:action]
 								when :bet
-									hand.bet += action[:amount]
+									raise 'Cannot bet at this stage.'
 								when :hit
-									new_card = @deck.draw
+									new_card = @deck.draw.first
 									new_card.show
 									hand.add(new_card)
 								when :stay
 									hand.active = false
 								when :double_down
 									hand.bet += hand.bet
-									new_card = @deck.draw
+									new_card = @deck.draw.first
 									new_card.show
 									hand.add(new_card)
 									hand.active = false
@@ -114,5 +135,30 @@ class Game
 			end
 		end
 		false
+	end
+
+	def display_table
+		puts 'Ruby Blackjack!'.center(80, '-')
+		puts border_center
+		puts border_center(@dealer_hand.to_s)
+		puts border_center
+		hand_strings = []
+		player_strings = []
+		@players.each do |player|
+			player.hands.each do |hand|
+				hand_strings << hand.to_s
+				player_strings << player.name.center(hand_strings.last.length)
+			end
+		end
+		puts border_center(hand_strings.join(' | '))
+		puts border_center(player_strings.join(' '))
+		puts border_center
+	end
+
+	def border_center(str=' ', width=80)
+		line = str.center(width)
+		line[0] = '*'
+		line[line.length-1] = '*'
+		line
 	end
 end
