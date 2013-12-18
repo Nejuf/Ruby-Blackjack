@@ -19,6 +19,8 @@ describe Hand do
 		@c3 = double('Card', :rank => 13, :suit => 'CLUBS')
 		@c4 = double('Card', :rank => 8, :suit => 'SPADES')
 		@c5 = double('Card', :rank => 5, :suit => 'SPADES')
+		@c6 = double('Card', :rank => 5, :suit => 'DIAMONDS')
+		@c7 = double('Card', :rank => 1, :suit => 'CLUBS')
 	end
 
 	context '#add' do
@@ -37,10 +39,6 @@ describe Hand do
 			@hand.add(@c2, @c3)
 			expect(@hand.cards.length).to eq(2)
 		end
-	end
-
-	context '#split' do
-
 	end
 
 	context '#points' do
@@ -79,4 +77,25 @@ describe Hand do
 		end
 	end
 
+
+	context '#split' do
+		it 'permits splitting when first 2 cards are equal' do
+			@hand = Hand.new
+			expect(@hand.can_split?).to be false
+			@hand.add(@c5, @c6)
+			expect(@hand.can_split?).to be true
+		end
+
+		it 'does not permit Aces to be split' do
+			@hand = Hand.new
+			@hand.add(@c1, @c7)
+			expect(@hand.can_split?).to be false
+		end
+
+		it 'does not permit unequal cards to be split' do
+			@hand = Hand.new
+			@hand.add(@c3, @c6)
+			expect(@hand.can_split?).to be false
+		end
+	end
 end
