@@ -6,9 +6,6 @@ class Deck
 	def initialize(deck_type='standard')
 		case deck_type
 		when 'standard'
-					# puts "cards #{cards}"
-					# puts "cards s #{self.cards}"
-					puts "cards @ #{@cards}"
 			Card::STANDARD_SUITS.each do |suit|
 				(1..13).each do |rank|
 					cards << Card.new(rank, suit)
@@ -19,4 +16,16 @@ class Deck
 		end
 	end
 
+	def top
+		cards.last
+	end
+
+	def bottom
+		cards.first
+	end
+
+	def draw(num_cards=1)
+		raise ArgumentError if num_cards < 1
+		cards.pop(num_cards)
+	end
 end

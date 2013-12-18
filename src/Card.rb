@@ -24,4 +24,5 @@ class Card
 	def hide
 		@face_down = true
 	end
+
 end

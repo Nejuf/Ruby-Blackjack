@@ -15,7 +15,15 @@ module CardCollection
 		cards.each(&block)
 	end
 
+	def <=>(other_cards)
+		cards.length <=> other_cards.length
+	end
+
 	def length
 		cards.length
+	end
+
+	def shuffle
+		cards.shuffle!
 	end
 end
