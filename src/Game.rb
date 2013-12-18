@@ -26,5 +26,13 @@ class Game
 		(4-@players.length).times do |num|
 			@players << ComputerPlayer.new("comp#{num}")
 		end
+
+		game_loop
+	end
+
+	def game_loop
+		until true == false
+			puts "loop"
+		end
 	end
 end
