@@ -45,4 +45,10 @@ class Hand
 		points == 21
 	end
 
+	def can_split?
+		return false if cards.length != 2
+		return false if cards.first.rank == 1
+		return false if cards.first.rank != cards.last.rank
+		true
+	end
 end
