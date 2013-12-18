@@ -12,7 +12,7 @@ Ruby v1.8.7
 - You start out with two cards (one face-up, one face-down).
 - Choose "hit" to draw another card, or "stay" to use the cards you have.
 - A tie with the dealer is a "push"; no money is lost or won.
-- Double-down - double your bet, and receive one, and only one, more card.  Non-controlling players may choose to double their best as well.
+- Double-down - double your bet, and receive one, and only one, more card.
 - Split - if your first two non-ace cards are the same value, you may split them into two separate hands, and play both.  An additional bet must be added to the new hand.
 
 ## Setup: ##

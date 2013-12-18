@@ -3,15 +3,19 @@ require('./src/CardCollection')
 class Hand
 	include CardCollection
 	
-	attr_accessor :bet
+	attr_accessor :bet, :active
+
 	def initialize
 		@bet = 0
+		@active = true
 	end
 
 	def add(*args)
 		args.each do |card|
 			cards << card
 		end
+
+		@active = false if bust?
 	end
 
 	def points
@@ -61,6 +65,7 @@ class Hand
 		raise Error, 'This hand cannot be split.' unless can_split?
 
 		new_hand = Hand.new
+		new_hand.bet = @bet
 		new_hand.add(cards.pop)
 		new_hand
 	end
