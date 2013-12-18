@@ -79,23 +79,37 @@ describe Hand do
 
 
 	context '#split' do
-		it 'permits splitting when first 2 cards are equal' do
+		before(:each) do
 			@hand = Hand.new
+		end
+
+		it 'permits splitting when first 2 cards are equal' do
 			expect(@hand.can_split?).to be false
 			@hand.add(@c5, @c6)
 			expect(@hand.can_split?).to be true
 		end
 
 		it 'does not permit Aces to be split' do
-			@hand = Hand.new
 			@hand.add(@c1, @c7)
 			expect(@hand.can_split?).to be false
 		end
 
 		it 'does not permit unequal cards to be split' do
-			@hand = Hand.new
 			@hand.add(@c3, @c6)
 			expect(@hand.can_split?).to be false
+		end
+
+		it 'returns a new hand with one of the cards' do
+			@hand.add(@c5, @c6)
+			split_hand = @hand.split
+			expect(@hand.cards.length).to eq(1)
+			expect(split_hand.cards.length).to eq(1)
+			expect([@c5, @c6]).to include(@hand.cards.first, split_hand.cards.first)
+		end
+
+		it 'raises an error when a hand cannot be split' do
+			@hand.add(@c3, @c6)
+			expect { @hand.split }.to raise_error
 		end
 	end
 end

@@ -51,4 +51,12 @@ class Hand
 		return false if cards.first.rank != cards.last.rank
 		true
 	end
+
+	def split
+		raise Error, 'This hand cannot be split.' unless can_split?
+
+		new_hand = Hand.new
+		new_hand.add(cards.pop)
+		new_hand
+	end
 end
