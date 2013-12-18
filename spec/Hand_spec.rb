@@ -11,6 +11,9 @@ describe Hand do
 			expect(@hand.cards.length).to eq(0)
 		end
 
+		it 'has a bet of 0' do
+			expect(@hand.bet).to eq(0)
+		end
 	end
 
 	before(:each) do

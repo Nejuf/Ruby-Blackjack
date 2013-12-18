@@ -2,9 +2,11 @@ require('./Blackjack.rb')
 
 describe Game do
 
-	context 'initialization' do
+	context 'start' do
 		before(:all) do
 			@game = Game.new
+			@game.stub(:gets) { '1' } #number of players
+			@game.start
 		end
 
 		it 'with a 52 card deck' do

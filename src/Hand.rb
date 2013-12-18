@@ -3,6 +3,11 @@ require('./src/CardCollection')
 class Hand
 	include CardCollection
 	
+	attr_accessor :bet
+	def initialize
+		@bet = 0
+	end
+
 	def add(*args)
 		args.each do |card|
 			cards << card
