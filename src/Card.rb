@@ -2,11 +2,18 @@
 class Card
 	STANDARD_SUITS = %w( CLUBS HEARTS SPADES DIAMONDS )
 
-	SUIT_STRINGS = {
-    :CLUBS => "♣",
-    :DIAMONDS => "♦",
-    :HEARTS => "♥",
-    :SPADES => "♠"
+	# SUIT_STRINGS = {
+ #    :CLUBS => "♣",
+ #    :DIAMONDS => "♦",
+ #    :HEARTS => "♥",
+ #    :SPADES => "♠"
+ #  }
+
+  	SUIT_STRINGS = {
+    :CLUBS => "C",
+    :DIAMONDS => "D",
+    :HEARTS => "H",
+    :SPADES => "S"
   }
 
   RANK_STRINGS = {

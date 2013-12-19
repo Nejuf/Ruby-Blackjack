@@ -1,9 +1,9 @@
 module Prompter
 	def prompt(message, fail_message="Invalid input.", options=[], &proc)
 		puts message
-		return gets.chomp if options.empty? && proc.nil?
-
 		response = ""
+		response = gets.chomp if options.empty? && proc.nil?
+
 		while response.empty?
 			input = gets.chomp
 			if(options.include?(input))
@@ -14,7 +14,7 @@ module Prompter
 				puts fail_message
 			end
 		end
-
+		puts ""
 		response
 	end
 

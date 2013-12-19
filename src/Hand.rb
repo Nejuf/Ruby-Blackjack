@@ -74,8 +74,28 @@ class Hand
 	def to_s
 		str = ""
 		cards.each do |c|
+			if c.is_down?
+				str << " ??"
+			else
+				str << " #{c}"
+			end
+		end
+		str
+	end
+
+	def to_show
+		str = ""
+		cards.each do |c|
 			str << " #{c}"
 		end
 		str
+	end
+
+	def <=>(other_hand)
+		return 1 if blackjack?
+		return 0 if bust? && other_hand.bust?
+		return -1 if bust?
+		return 1 if other_hand.bust?
+		points <=> other_hand.points
 	end
 end
