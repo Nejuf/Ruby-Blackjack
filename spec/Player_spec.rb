@@ -42,4 +42,11 @@ describe Player do
 			expect(@player.total_bets).to eq(120)
 		end
 	end
+
+	context '#choose_play' do
+		it 'raises NotImplementedError' do
+			@player = Player.new
+			expect{ @player.choose_play(double('Hand'), 10) }.to raise_error NotImplementedError
+		end
+	end
 end
