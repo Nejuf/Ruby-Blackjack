@@ -155,7 +155,32 @@ describe Game do
 			end
 
 			context '#take_dealer_turn' do
+				it 'has dealer hit until hand is greater than 16' do
+					@game.take_dealer_turn
+					expect([0,17,18,19,20,21]).to include(@game.dealer_hand.points)
+				end
+			end
 
+			context '#reset table' do
+				it 'creates a new deck' do
+					old_deck = @game.deck
+					@game.reset_table
+					expect(@game.deck).to_not eql(old_deck)
+				end
+
+				it 'creates a new dealer hand' do
+					old_hand = @game.dealer_hand
+					@game.reset_table
+					expect(@game.dealer_hand).to_not eql(old_hand)
+				end
+
+				it 'creates new players hands' do
+					@game.reset_table
+					@game.players.each do |player|
+						expect(player.hands.length).to eq(1)
+						expect(player.hands.first.points).to eq(0)
+					end
+				end
 			end
 		end
 	end
