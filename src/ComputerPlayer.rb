@@ -23,10 +23,6 @@ class ComputerPlayer < Player
 				end
 			end
 
-			if (dealer_top_card.rank > 1 && dealer_top_card.rank < 8) &&  (hand.points == 11 || hand.points == 10)
-				return { :action => :double_down }
-			end
-
 			if dealer_top_card.rank == 1 || dealer_top_card.rank > 9
 				if hand.points < 17
 					return { :action => :hit }
@@ -35,7 +31,11 @@ class ComputerPlayer < Player
 				end
 			else
 				if hand.points < 12
-					return { :action => :hit }
+					if hand.points < 10
+						return { :action => :hit }
+					else
+						return { :action => :double_down }
+					end
 				else
 					return { :action => :stay }
 				end
