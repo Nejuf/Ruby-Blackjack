@@ -109,7 +109,7 @@ class Game
 									hand.active = false
 								when :split
 									new_hand = hand.split
-									player.hands.insert(i+1, new_hand)
+									player.hands.insert(i, new_hand)
 								when :quit
 									player.hands.each do |h|
 										hand.active = false
