@@ -91,6 +91,8 @@ class Hand
 		str
 	end
 
+	#!a hand with blackjack is always a winner, and thus always return 1; the other hand is not checked
+	# bust is equivalent to 0 points
 	def <=>(other_hand)
 		return 1 if blackjack?
 		return 0 if bust? && other_hand.bust?
