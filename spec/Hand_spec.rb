@@ -18,10 +18,11 @@ describe Hand do
 
 	before(:each) do
 		# Create card double variables (@c1s == ace of spades, @c11d = jack of diamonds)
-		SUITS = %w( CLUBS DIAMONDS HEARTS SPADES )
-		SUITS.each do |suit|
+		suits = %w( CLUBS DIAMONDS HEARTS SPADES )
+		suits.each do |suit|
 			13.times do |num|
-				instance_variable_set( "@c#{num + 1}#{suit.slice(0,1).downcase}", double('Card', :rank => num + 1, :suit => suit, :show => true))
+				instance_variable_set( "@c#{num + 1}#{suit.slice(0,1).downcase}", 
+					double('Card', :rank => num + 1, :suit => suit, :show => true))
 			end
 		end
 	end

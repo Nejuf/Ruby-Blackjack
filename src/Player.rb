@@ -10,12 +10,12 @@ class Player
 	end
 
 	def active
-		@active = false if @money < 0
+		@active = false if @money <= 0
 		@active
 	end
 
 	def active=(bool)
-		return if bool && (@money < 0)
+		return if bool && (@money <= 0)
 		@active = bool
 	end
 
