@@ -36,31 +36,46 @@ class Game
 		while active_human_player?
 			@deck.shuffle
 
+			get_player_bets
+
 			#--Set dealer's cards
 			@dealer_hand.add(*@deck.draw(2))
 
-			#-- Get Bets
-			@players.each do |player|
-				next unless player.active
+			take_player_turns
 
-				action = player.choose_play(player.hands.first, @dealer_hand.cards.last)
+			take_dealer_turn
 
-				case action[:action]
-				when :bet
-					player.hands.first.bet += action[:amount]
-				when :quit
-					player.hands.each do |hand|
-						hand.active = false
-						player.money -= hand.bet
-					end
-					player.active = false
-				else
-					raise "Can only bet or quit at this stage.\nUnrecognized player action: #{action}"
+			perform_wins_and_losses
+
+			reset_table
+		end
+
+		show_game_over
+	end
+
+	def get_player_bets
+		@players.each do |player|
+			next unless player.active
+
+			action = player.choose_play(player.hands.first)
+
+			case action[:action]
+			when :bet
+				player.hands.first.bet += action[:amount]
+			when :quit
+				player.hands.each do |hand|
+					hand.active = false
+					player.money -= hand.bet
 				end
+				player.active = false
+			else
+				raise "Can only bet or quit at this stage.\nUnrecognized player action: #{action}"
 			end
+		end
+	end
 
-			#--Player Turns--
-			while active_hand?
+	def take_player_turns
+		while active_hand?
 
 				@players.each do |player|
 					next unless player.active
@@ -108,49 +123,52 @@ class Game
 					end
 				end
 			end
+	end
 
-			display_table(nil, true)
+	def take_dealer_turn
+		display_table(nil, true)
+		@dealer_hand.cards.first.show
+		while(@dealer_hand.points < 17)
+			hit(@dealer_hand)
+		end
+		display_table(nil, true)
+	end
 
-			#--Dealer's Turn
-			@dealer_hand.cards.first.show
-			while(@dealer_hand.points < 17)
-				hit(@dealer_hand)
-			end
-			display_table(nil, true)
+	def perform_wins_and_losses
+		@players.each do |player|
+			player.hands.each do |hand|
+				case hand <=> @dealer_hand
+				when -1
+					player.money -= hand.bet
+					notify "--#{player.name} loses $#{hand.bet}."
+				when 0
+					notify "--#{player.name} pushed."
+				when 1
+					if hand.blackjack?
+						winnings = (hand.bet * 1.5).floor
+						player.money += winnings
+						notify "--Blackjack! #{player.name} wins $#{winnings}."
 
-			#--Wins and Losses
-			@players.each do |player|
-				player.hands.each do |hand|
-					case hand <=> @dealer_hand
-					when -1
-						player.money -= hand.bet
-						notify "--#{player.name} loses $#{hand.bet}."
-					when 0
-						notify "--#{player.name} pushed."
-					when 1
-						if hand.blackjack?
-							winnings = (hand.bet * 1.5).floor
-							player.money += winnings
-							notify "--Blackjack! #{player.name} wins $#{winnings}."
-
-						else
-							player.money += hand.bet
-							notify "--#{player.name} wins $#{hand.bet}."
-						end
+					else
+						player.money += hand.bet
+						notify "--#{player.name} wins $#{hand.bet}."
 					end
 				end
 			end
-
-			#--Reset table
-			@deck = Deck.new
-			@dealer_hand = Hand.new
-
-			@players.each do |player|
-				player.hands = player.active ? [Hand.new] : []
-			end
 		end
+	end
 
-		notify('Game Over!')
+	def reset_table
+		@deck = Deck.new
+		@dealer_hand = Hand.new
+
+		@players.each do |player|
+			player.hands = player.active ? [Hand.new] : []
+		end
+	end
+
+	def show_game_over
+		notify('\n--Game Over!--')
 		notify('Final totals:')
 		@players.sort.reverse.each do |player|
 			notify "--#{player.name}: $#{player.money}"

@@ -19,7 +19,7 @@ class Player
 		@active = bool
 	end
 
-	def choose_play(hand, dealer_points)
+	def choose_play(hand, dealer_top_card=nil)
 		raise NotImplementedError
 	end
 

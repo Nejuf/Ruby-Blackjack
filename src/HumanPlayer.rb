@@ -11,7 +11,7 @@ class HumanPlayer < Player
 		end
 	end
 
-	def choose_play(hand, dealer_points)
+	def choose_play(hand, dealer_top_card=nil)
 		if hand.bet == 0
 			bet = prompt("#{@name}, How much will you bet? ($1-$#{@money}) or (\"quit\" to stop playing)", "Invalid bet.") do |input|
 				return { :action => :quit } if input.downcase == 'quit'

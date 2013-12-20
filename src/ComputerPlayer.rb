@@ -7,7 +7,7 @@ class ComputerPlayer < Player
 		@name = name
 	end
 
-	def choose_play(hand, dealer_top_card)
+	def choose_play(hand, dealer_top_card=nil)
 		if @money <= 0
 			return { :action => :quit }
 		end
