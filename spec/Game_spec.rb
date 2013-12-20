@@ -2,6 +2,13 @@ require('./Blackjack.rb')
 
 describe Game do
 
+	before(:each) do
+		HumanPlayer.any_instance.stub(:puts)
+		Game.any_instance.stub(:puts)
+		HumanPlayer.any_instance.stub(:prompt) {'stub'}
+		Game.any_instance.stub(:prompt) {'stub'}
+	end
+
 	context '#initialize' do
 		before(:all) do
 			@game = Game.new
@@ -27,9 +34,9 @@ describe Game do
 	context '#start' do
 		before(:all) do
 			@game = Game.new
-			@game.stub(:gets) { '1' } #number of players
+			@game.stub(:prompt) { '1' } #number of players
 			@game.stub(:game_loop)
-			HumanPlayer.any_instance.stub(:gets){ 'Bob' } unless HumanPlayer.nil?
+			HumanPlayer.any_instance.stub(:prompt){ 'Bob' } unless HumanPlayer.nil?
 			@game.start
 		end
 
@@ -46,8 +53,9 @@ describe Game do
 		end
 	end
 
-	context 'after game setup, but not looping:' do
+	context 'after game setup, but not started' do
 		before(:all) do
+			HumanPlayer.any_instance.stub(:puts)
 			@game = Game.new
 			@game.players = [
 				HumanPlayer.new(['player', 'dealer']),
@@ -109,6 +117,45 @@ describe Game do
 				end
 				human.active = true
 				expect(@game.active_human_player?).to be true
+			end
+		end
+
+		context 'turns' do
+			before(:all) do
+				@game.players = [
+					ComputerPlayer.new('comp1'),
+					ComputerPlayer.new('comp2'),
+					ComputerPlayer.new('comp3'),
+					ComputerPlayer.new('comp4')
+				]
+			end
+
+			context '#get_player_bets' do
+				it 'gets bets from all players' do
+					@game.get_player_bets
+
+					@game.players.each do |player|
+						player.hands.each do |hand|
+							expect(hand.bet).to be > 0
+						end
+					end
+				end
+			end
+
+			context '#take_player_turns' do
+				it 'does not leave active hands' do
+					@game.dealer_hand.add(*@game.deck.draw(2))
+					@game.take_player_turns
+					@game.players.each do |player|
+						player.hands.each do |hand|
+							expect(hand.active).to be false
+						end
+					end
+				end
+			end
+
+			context '#take_dealer_turn' do
+
 			end
 		end
 	end

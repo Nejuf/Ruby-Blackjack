@@ -1,6 +1,9 @@
 require('./Blackjack.rb')
 
 describe HumanPlayer do
+	before(:each) do
+		HumanPlayer.any_instance.stub(:puts)
+	end
 
 	context 'initialization' do
 		before(:all) do
