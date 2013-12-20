@@ -41,7 +41,7 @@ class Game
 			@players.each do |player|
 				next unless player.active
 
-				action = player.choose_play(player.hands.first, @dealer_hand.points)
+				action = player.choose_play(player.hands.first, @dealer_hand.cards.last)
 
 				case action[:action]
 				when :bet
@@ -76,7 +76,7 @@ class Game
 							hand.active = true
 							while hand.active
 								display_table(hand)
-								action = player.choose_play(hand, @dealer_hand.points)
+								action = player.choose_play(hand, @dealer_hand.cards.last)
 
 								case action[:action]
 								when :bet
@@ -195,7 +195,7 @@ class Game
 		money_strings = []
 		@players.each do |player|
 			if !player.active
-					hand_string_len = player.name.length
+					hand_string_len = player.name.length + 2
 					hand_strings << " " * hand_string_len
 					player_strings << player.name.center(hand_string_len)
 					bet_strings << "$--".center(hand_string_len)

@@ -23,6 +23,13 @@ class Player
 		raise NotImplementedError
 	end
 
+	def total_bets
+		total = 0
+		hands.inject(total) do |total, hand|
+			total + hand.bet
+		end
+	end
+
 	def <=>(other_player)
 		@money <=> other_player.money
 	end

@@ -32,11 +32,4 @@ class HumanPlayer < Player
 			return {:action => choice.to_sym }
 		end
 	end
-
-	def total_bets
-		total = 0
-		hands.inject(total) do |total, hand|
-			total + hand.bet
-		end
-	end
 end
