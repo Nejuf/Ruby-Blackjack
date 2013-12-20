@@ -1,4 +1,4 @@
-require('./Blackjack.rb')
+require('./src/Game')
 
 describe HumanPlayer do
 	before(:each) do

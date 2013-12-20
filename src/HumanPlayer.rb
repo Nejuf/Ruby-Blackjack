@@ -4,9 +4,9 @@ require('./src/Prompter')
 class HumanPlayer < Player
 	include Prompter
 
-	def initialize(taken_names)
+	def initialize(taken_names, player_num=1)
 		super()
-		@name = prompt("Please enter your name.") do |input|
+		@name = prompt("Player#{player_num}, please enter your name.") do |input|
 			(input.length > 0 && !taken_names.include?(input.downcase))
 		end
 	end

@@ -19,9 +19,10 @@ class Game
 	end
 
 	def start
+		notify('Welcome to Ruby Blackjack!')
 		human_count = prompt('How many human players? (1-4)', 'Invalid input.', %w( 1 2 3 4 )).to_i
-		human_count.times do 
-			@players << HumanPlayer.new(@taken_names)
+		human_count.times do |num|
+			@players << HumanPlayer.new(@taken_names, num+1)
 			@taken_names << @players.last.name
 		end
 
@@ -168,7 +169,7 @@ class Game
 	end
 
 	def show_game_over
-		notify('\n--Game Over!--')
+		notify('--Game Over!--')
 		notify('Final totals:')
 		@players.sort.reverse.each do |player|
 			notify "--#{player.name}: $#{player.money}"

@@ -1,4 +1,4 @@
-require('./Blackjack.rb')
+require('./src/Game')
 
 describe Player do
 
